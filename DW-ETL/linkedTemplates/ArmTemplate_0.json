@@ -65,6 +65,40 @@
 				},
 				"annotations": [],
 				"type": "AzureBlob",
+				"structure": [
+					{
+						"name": "ID",
+						"type": "String"
+					},
+					{
+						"name": "NAME",
+						"type": "String"
+					},
+					{
+						"name": "REGION",
+						"type": "String"
+					},
+					{
+						"name": "ADDRESS",
+						"type": "String"
+					},
+					{
+						"name": "CITY",
+						"type": "String"
+					},
+					{
+						"name": "STATE",
+						"type": "String"
+					},
+					{
+						"name": "ZIP",
+						"type": "String"
+					},
+					{
+						"name": "MODIFIED",
+						"type": "String"
+					}
+				],
 				"typeProperties": {
 					"format": {
 						"type": "TextFormat",
@@ -73,7 +107,7 @@
 						"nullValue": "\\N",
 						"treatEmptyAsNull": true,
 						"skipLineCount": 0,
-						"firstRowAsHeader": false
+						"firstRowAsHeader": true
 					},
 					"fileName": "[parameters('CustomerBlob_properties_typeProperties_fileName')]",
 					"folderPath": "[parameters('CustomerBlob_properties_typeProperties_folderPath')]"
@@ -81,6 +115,59 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/bssugstorage')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/StageCustomer')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "bssugdw",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"structure": [
+					{
+						"name": "ID",
+						"type": "Int32"
+					},
+					{
+						"name": "NAME",
+						"type": "String"
+					},
+					{
+						"name": "REGION",
+						"type": "String"
+					},
+					{
+						"name": "ADDRESS",
+						"type": "String"
+					},
+					{
+						"name": "CITY",
+						"type": "String"
+					},
+					{
+						"name": "STATE",
+						"type": "String"
+					},
+					{
+						"name": "ZIP",
+						"type": "String"
+					},
+					{
+						"name": "MODIFIED",
+						"type": "DateTime"
+					}
+				],
+				"typeProperties": {
+					"tableName": "[concat('[', 'dbo].[STAGE_CUSTOMER]')]"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/bssugdw')]"
 			]
 		}
 	]

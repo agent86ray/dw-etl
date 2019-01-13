@@ -6,22 +6,6 @@
 			"type": "string",
 			"metadata": "Data Factory Name",
 			"defaultValue": "dw-etl"
-		},
-		"bssugdw_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'bssugdw'"
-		},
-		"bssugstorage_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'bssugstorage'"
-		},
-		"CustomerBlob_properties_typeProperties_fileName": {
-			"type": "string",
-			"defaultValue": "customer.csv"
-		},
-		"CustomerBlob_properties_typeProperties_folderPath": {
-			"type": "string",
-			"defaultValue": "staging"
 		}
 	},
 	"variables": {
@@ -37,7 +21,6 @@
 					"referenceName": "bssugstorage",
 					"type": "LinkedServiceReference"
 				},
-				"annotations": [],
 				"type": "AzureBlob",
 				"structure": [
 					{
@@ -83,13 +66,10 @@
 						"skipLineCount": 0,
 						"firstRowAsHeader": true
 					},
-					"fileName": "[parameters('CustomerBlob_properties_typeProperties_fileName')]",
-					"folderPath": "[parameters('CustomerBlob_properties_typeProperties_folderPath')]"
+					"fileName": "customer.csv",
+					"folderPath": "staging"
 				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/bssugstorage')]"
-			]
+			}
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/StageCustomer')]",
@@ -100,7 +80,6 @@
 					"referenceName": "bssugdw",
 					"type": "LinkedServiceReference"
 				},
-				"annotations": [],
 				"type": "AzureSqlTable",
 				"structure": [
 					{
@@ -139,36 +118,7 @@
 				"typeProperties": {
 					"tableName": "[concat('[', 'dbo].[STAGE_CUSTOMER]')]"
 				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/bssugdw')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/bssugdw')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureSqlDatabase",
-				"typeProperties": {
-					"connectionString": "[parameters('bssugdw_connectionString')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/bssugstorage')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobStorage",
-				"typeProperties": {
-					"connectionString": "[parameters('bssugstorage_connectionString')]"
-				}
-			},
-			"dependsOn": []
+			}
 		}
 	]
 }
