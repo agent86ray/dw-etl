@@ -6,6 +6,40 @@
 			"type": "LinkedServiceReference"
 		},
 		"type": "AzureBlob",
+		"structure": [
+			{
+				"name": "ID",
+				"type": "String"
+			},
+			{
+				"name": "NAME",
+				"type": "String"
+			},
+			{
+				"name": "REGION",
+				"type": "String"
+			},
+			{
+				"name": "ADDRESS",
+				"type": "String"
+			},
+			{
+				"name": "CITY",
+				"type": "String"
+			},
+			{
+				"name": "STATE",
+				"type": "String"
+			},
+			{
+				"name": "ZIP",
+				"type": "String"
+			},
+			{
+				"name": "MODIFIED",
+				"type": "String"
+			}
+		],
 		"typeProperties": {
 			"format": {
 				"type": "TextFormat",
@@ -14,7 +48,7 @@
 				"nullValue": "\\N",
 				"treatEmptyAsNull": true,
 				"skipLineCount": 0,
-				"firstRowAsHeader": false
+				"firstRowAsHeader": true
 			},
 			"fileName": "customer.csv",
 			"folderPath": "staging"
